@@ -577,7 +577,7 @@ data <- left_join(data, residuals_data_a) # join
 
 
 ##--Calculation of a size index by means of PCA
-pca1 <- prcomp(data[,22:24], center = TRUE, scale = TRUE)
+pca1 <- prcomp(data[,23:25], center = TRUE, scale = TRUE)
 
 # To see the Eigenvalues, and the % variance explained
 eig <- (pca1$sdev)^2
@@ -701,23 +701,20 @@ data <- read.csv("path_revision_females.csv")
 ## Path analysis for females: 
 
 path_females <- psem(
-  M1 <- glm(status_cat ~ nestling_condition + adult_condition + feather_length  + spottiness + run_day_eclosion + brood_size , family = binomial, data = data),
-  M2 <- lm(adult_condition ~ nestling_condition + run_day_eclosion + brood_size , data = data) ,
-  M3 <- lm(feather_length ~ adult_condition , data = data),
-  M5 <- lm(spottiness ~run_day_eclosion , data = data),
-  M4 <- lm(nestling_condition ~ run_day_eclosion + brood_size , data = data),data = data) 
+  M1 <- glmer(status_cat ~ nestling_condition + adult_condition + feather_length  + spottiness + run_day_eclosion + brood_size + (1|capture_year) , family = binomial, data = data),
+  M2 <- lmer(adult_condition ~ nestling_condition + run_day_eclosion + brood_size + (1|capture_year)  , data = data) ,
+  M3 <- lmer(feather_length ~ adult_condition + (1|capture_year)  , data = data),
+  M5 <- lmer(spottiness ~run_day_eclosion + (1|capture_year)  , data = data),
+  M4 <- lmer(nestling_condition ~ run_day_eclosion + brood_size + (1|capture_year)  , data = data),data = data) 
 
 summary(path_females, standardize = "scale")
 
+rm(list = ls())
 
 ## Path analysis - Males
 
 ##--Set working directory
 setwd("C:/Users/iraid/Desktop/males/males")
-setwd("C:/Users/iraid/Desktop/comparacion")
-
-data <- read.csv("path_analysis_males.csv", header= T, sep = ";", dec = ".")
-data2 <- read.csv("data_machos_2907.csv", header= T, sep = ";", dec = ".")
 
 ##--Load data
 data <- read.csv("path_analysis_males.csv", header= T, sep = ";", dec = ".")
@@ -731,13 +728,13 @@ data$cohort <- as.factor(as.character(data$cohort))
 data$capture_year <- as.factor(as.character(data$capture_year))
 data$ring <- as.factor(as.character(data$ring))
 data$observer_n <- as.factor(as.character(data$observer_n))
-data$observer_a2 <- as.factor(as.character(data$observer_a2))
+data$observer_a <- as.factor(as.character(data$observer_a))
 str(data)
 
 ##--Considering the variability among observers at measuring
-tarsus_ad <- lm(tarsus_a ~ observer_a2, data = data)
-beak_ad <- lm(beak ~ observer_a2, data = data)
-wing_ad <- lm(wing_a ~ observer_a2, data = data)
+tarsus_ad <- lm(tarsus_a ~ observer_a, data = data)
+beak_ad <- lm(beak ~ observer_a, data = data)
+wing_ad <- lm(wing_a ~ observer_a, data = data)
 
 summary(wing_ad)
 
