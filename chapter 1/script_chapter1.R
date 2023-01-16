@@ -14,9 +14,34 @@ library(performance)
 # Dataset can be found on the following link: https://figshare.com/articles/dataset/Data_rar/19705033
 
 ##--Set working directory
-setwd("C:/Users/iraid/Desktop/females/females")
+#Get the current script's path
+repo_path = dirname(rstudioapi::getActiveDocumentContext()$path)
+setwd(repo_path)
+
+if(!dir.exists("./data")){
+  print("Creating data folder")
+  dir.create(repo_path,"/data")
+}
+
+if(!dir.exists("./outputs")){
+  print("Creating outputs folder")
+  dir.create(repo_path,"/outputs")
+}
+
+## Download data
+
+
+data_url = ""
+data_file = "./data/adult_females.csv"
+
+if(!file.exists(data_file)){
+  print("Downloading...")
+  download.file(data_url, data_file,)
+  print("Data ready")
+}
+
 ##--Load data
-data <- read.csv("adult_females.csv", header= T, sep = ";", dec = ".")
+data <- read.csv("./data/adult_females.csv", header= T, sep = ";", dec = ".")
 
 ##--Checking variable types
 str(data)
