@@ -772,3 +772,10 @@ samples <- runMCMC(mcmc = CsurvivalMCMC,
 
 
 saveRDS(samples, "./output.rds") #output in rds format
+
+
+# MCMCsummary() and MCMCtrace() are used to extract the result of the model and check the convergence of the model parameters respectively.
+# To inspect each of the parameters of the models, one only has to modify the 'params' argument in each function.
+
+MCMCsummary(samples, params = "all")
+MCMCtrace(samples, Rhat = T, n.eff = T,ind = T, params = "TphiJ_male",  iter = 25000,  pdf = FALSE, post_zm = T)

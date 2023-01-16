@@ -1,6 +1,6 @@
 
 ## This R script contains the code for running a multievent capture-recapture model and conducting the following posterior
-# predictive check. First, we run the model and then, we used the samples to generate new datasets via posterior predictive checks.
+# predictive checks. First, we run the model and then, we use the samples to generate new datasets via posterior predictive checks.
 # Note, running this script requires a high amount of memory. Originally, it was divided in three parts and ran on a supercomputer. 
 # In this script, each part is shown after the last for the sake of simplicity. 
 
