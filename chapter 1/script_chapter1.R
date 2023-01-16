@@ -2,6 +2,14 @@
 # body condition influences male but not female reproductive status in a wild passerine      
 
 
+# Libraries
+library(tidyverse)
+library(lme4) 
+library(lmerTest)
+library(DHARMa) 
+library(piecewiseSEM)
+library(performance)
+
 # Adult female analysis. 
 # Dataset can be found on the following link: https://figshare.com/articles/dataset/Data_rar/19705033
 
@@ -256,6 +264,7 @@ rm(list = ls())
 
 # Adult Male analysis. 
 # Dataset can be found on the following link: https://figshare.com/articles/dataset/Data_rar/19705033
+
 ##--Set working directory
 setwd("C:/Users/iraid/Desktop/males/males")
 ##--Load data
@@ -398,7 +407,7 @@ drop1(adult_males, test = "Chisq")
 se <- sqrt(diag(vcov(adult_males)))
 
 # Table of estimates in the logit scale with 95% CI
-(tab <- cbind(Est = fixef(adult_males), LL = fixef(adult_males) - 1.96 * se, UL = fixef(adult_females) + 1.96 * se))
+(tab <- cbind(Est = fixef(adult_males), LL = fixef(adult_males) - 1.96 * se, UL = fixef(adult_males) + 1.96 * se))
 
 # 
 exp(tab)   # if OR = 1, no association is detected; OR > 1, positive association; OR < 1, negative 
@@ -429,6 +438,7 @@ data$observer <- as.factor(data$observer)
 tarsus <- lm(tarsus ~ observer, data = data) # for tarsus length
 check_model(tarsus)
 summary(tarsus)
+
 ##--Joining  the residuals of the last models to the dataframe
 
 # Tarsus length 
@@ -651,7 +661,7 @@ head(residuals_data_n, 20)
 data <- left_join(data, residuals_data_n) # join
 
 ## Model to calculate a body condition index 
-nestling_condition <- lm(weight_n ~ scale(tarsus_cor_n) + (1|cohort), data = data) 
+nestling_condition <- lm(weight_n ~ scale(tarsus_cor_n) , data = data) 
 
 # to check normality of residuals
 par(mfrow=c(1,2))
@@ -682,9 +692,11 @@ data <- left_join(data, residuals_data_n) # left join
 ## Path analysis
 
 str(data)
+# This is the only way I made psem() worked with categorical response variables: saving the
+# new dataset and reloading again.
 
 write.csv(data, "path_revision_females.csv")
-data <- read.csv("path_revision_females.csv") # this is the only way I made psem() worked with categorical response variables.
+data <- read.csv("path_revision_females.csv") 
 
 ## Path analysis for females: 
 
