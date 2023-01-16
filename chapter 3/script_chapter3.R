@@ -755,6 +755,8 @@ survivalConf <- configureMCMC(survival, monitors = c("beta", "eps_phi", "eps_psi
                                                      "aF_male",
                                                      "aF_female"))  
 
+# Choosing the sampler and compiling the model.
+
 survivalConf$removeSamplers(c("beta", "eps_phi", "eps_psi"))
 survivalConf$addSampler(target = c("beta", "eps_phi", "eps_psi"), type = "AF_slice")
 survivalMCMC <- buildMCMC(survivalConf)
@@ -762,10 +764,11 @@ CsurvivalMCMC <- compileNimble(survivalMCMC,
                                project = survival)
 
 
+# Running the model. 
 samples <- runMCMC(mcmc = CsurvivalMCMC, 
                    niter = 30000, 
                    nburnin = 5000, 
                    nchains = 2)
 
 
-saveRDS(samples, "/mnt/lustre/scratch/nlsas/home/csic/ecf/dgi/Aberdeen_New/Aberdeen/IMEDEA/FINAL_ANALYSIS/aleatorio_resultados/resultados_MCMC/samples_AF_slice.rds")
+saveRDS(samples, "./output.rds") #output in rds format
