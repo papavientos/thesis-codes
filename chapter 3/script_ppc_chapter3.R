@@ -1048,8 +1048,6 @@ female_unknown_hist <- recordPlot(
 
 dev.off()
 
-
-
 # And that would be all. Hope you make it through with small trouble. Please, if you find any mistake or
 # have any suggestion, do not hesitate to contact me. You can reach me at iraidaredondogar@gmail.com
 
