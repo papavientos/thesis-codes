@@ -9,6 +9,7 @@ library(lmerTest)
 library(DHARMa) 
 library(piecewiseSEM)
 library(performance)
+library(archive)
 
 # Adult female analysis. 
 # Dataset can be found on the following link: https://figshare.com/articles/dataset/Data_rar/19705033
@@ -28,19 +29,9 @@ if(!dir.exists("./outputs")){
   dir.create(repo_path,"/outputs")
 }
 
-## Download data
 
+## Load data
 
-data_url = ""
-data_file = "./data/adult_females.csv"
-
-if(!file.exists(data_file)){
-  print("Downloading...")
-  download.file(data_url, data_file,)
-  print("Data ready")
-}
-
-##--Load data
 data <- read.csv("./data/adult_females.csv", header= T, sep = ";", dec = ".")
 
 ##--Checking variable types
