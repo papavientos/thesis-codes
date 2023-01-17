@@ -24,8 +24,6 @@ library(abind)
 library(coda)
 
 
-setwd("/mnt/lustre/scratch/nlsas/home/csic/ecf/dgi/Aberdeen_New/Aberdeen/IMEDEA/FINAL_ANALYSIS")
-
 
 ##--Load data--------------------------------------------------------------------
 starlings <- read.csv("./data/event_hist_new_cert1.csv", sep = ",", head = T) # dataset with the event histories
