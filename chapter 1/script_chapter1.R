@@ -9,14 +9,30 @@ library(lmerTest)
 library(DHARMa) 
 library(piecewiseSEM)
 library(performance)
+library(archive)
 
 # Adult female analysis. 
 # Dataset can be found on the following link: https://figshare.com/articles/dataset/Data_rar/19705033
 
 ##--Set working directory
-setwd("C:/Users/iraid/Desktop/females/females")
-##--Load data
-data <- read.csv("adult_females.csv", header= T, sep = ";", dec = ".")
+#Get the current script's path
+repo_path = dirname(rstudioapi::getActiveDocumentContext()$path)
+setwd(repo_path)
+
+if(!dir.exists("./data")){
+  print("Creating data folder")
+  dir.create(repo_path,"/data")
+}
+
+if(!dir.exists("./outputs")){
+  print("Creating outputs folder")
+  dir.create(repo_path,"/outputs")
+}
+
+
+## Load data
+
+data <- read.csv("./data/adult_females.csv", header= T, sep = ";", dec = ".")
 
 ##--Checking variable types
 str(data)
